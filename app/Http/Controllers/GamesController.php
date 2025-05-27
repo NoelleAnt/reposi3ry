@@ -18,7 +18,7 @@ class GamesController extends Controller
      */
     public function index()
     {
-        //Step 3. Your code here
+        return view('games.list', ['games' => $this->game_list]);
     }
 
     /**
@@ -26,11 +26,11 @@ class GamesController extends Controller
      */
     public function show(string $id)
     {
-        //Step 4.
-        $results = array_filter($this->game_list, function ($game) use ($id) {
-            return $game['id'] != $id;
+        $game = array_filter($this->game_list, function ($game) use ($id) {
+            return $game['id'] == $id;
         });
-        return view('games.show', ['games' => $results]);
+
+        return view('games.show', ['game' => reset($game)]);
     }
 
     /**
@@ -38,12 +38,13 @@ class GamesController extends Controller
      */
     public function destroy(string $id)
     {
-        $results = array_filter($this->game_list, function ($game) use ($id) {
-            return $game['id'] == $id;
+        $this->game_list = array_filter($this->game_list, function ($game) use ($id) {
+            return $game['id'] != $id;
         });
+
         return response()->json([
-            'message' => 'Record Successfull Deleted.',
-            'content' => $results
+            'message' => 'Record Successfully Deleted.',
+            'content' => $this->game_list
         ], 200);
     }
 }
