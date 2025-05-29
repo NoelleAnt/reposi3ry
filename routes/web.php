@@ -19,3 +19,6 @@ Route::get('/games/{id}', [GamesController::class, 'show'])->name('games.show');
 
 // Route for deleting a specific game
 Route::delete('/games/{id}', [GamesController::class, 'destroy'])->name('games.destroy');
+
+// ...
+
